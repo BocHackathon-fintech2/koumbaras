@@ -52,7 +52,7 @@
             <span class="mobile-menu-icon"></span>
         </div>
         <ul>
-            <li><a href="#">Link 1</a></li>
+            <li><a href="#">Dashboard</a></li>
             <li><a href="#">Link 2</a></li>
             <li><a href="#">Link 3</a></li>
             <li><a href="#">Link 4</a></li>
@@ -66,7 +66,7 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="start-savings-container col-md-12">
-                            <a class="start-saving-btn" href=""><span>+</span>Start Saving</a>
+                            <a class="start-saving-btn" href="createPLan.php"><span>+</span>Start Saving</a>
                         </div>
                     </div>
                 </div>

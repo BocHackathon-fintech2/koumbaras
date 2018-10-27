@@ -43,26 +43,35 @@
                     <div class="row">
                         <div class="create-plan-container col-md-12">
 
-                            <form class="create-plan-form" action="">
+                            <form class="create-plan-form" action="" method="post">
 
                                 <span>Choose Goal:</span>
-                                <select class="custom-select">
+                                <select name="choose-goal" class="custom-select">
                                     <option selected>Select a goal</option>
-                                    <option value="1">Mobile Phone</option>
-                                    <option value="2">Laptop</option>
-                                    <option value="3">Car</option>
+                                    <option value="Mobile Phone">Mobile Phone</option>
+                                    <option value="Laptop">Laptop</option>
+                                    <option value="Car">Car</option>
                                 </select>
                                 <br><br>
                                 <span>Saving Goal:</span>
-                                <input type="number" id="example-number-input">
+                                <input name="saving-goal" type="number" id="example-number-input">
 
                                 <br><br>
                                 <span>By Date:</span>
-                                <input type="date" id="example-date-input">
+                                <input name="end-date" type="date" id="example-date-input">
 
                                 <br><br>
-                                <span>Choose Account:</span>
-                                <select class="custom-select">
+                                <span>Source Account:</span>
+                                <select name="source-acount" class="custom-select">
+                                    <option selected>Select an account</option>
+                                    <option value="1">Option1</option>
+                                    <option value="2">Option2</option>
+                                    <option value="3">Option3</option>
+                                </select>
+
+                                <br><br>
+                                <span>Destination Account:</span>
+                                <select name="destination-acount" class="custom-select">
                                     <option selected>Select an account</option>
                                     <option value="1">Option1</option>
                                     <option value="2">Option2</option>
@@ -71,7 +80,7 @@
 
                                 <br><br>
                                 <span>Daily Savings:</span>
-                                <input type="number" id="example-number-input">
+                                <input name="daily-savings" type="number" id="example-number-input">
 
                                 <br><br>
                                 <input class="start-saving-btn" type="submit" value="Create Plan">
