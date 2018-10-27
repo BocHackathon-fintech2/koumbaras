@@ -54,15 +54,15 @@
                                 </select>
                                 <br><br>
                                 <span>Saving Goal:</span>
-                                <input name="saving-goal" type="number" id="example-number-input">
+                                <input name="saving-goal" type="number" id="saving-goal">
 
                                 <br><br>
                                 <span>By Date:</span>
-                                <input name="end-date" type="date" id="example-date-input">
+                                <input name="end-date" type="date" id="end-date">
 
                                 <br><br>
                                 <span>Source Account:</span>
-                                <select name="source-acount" class="custom-select">
+                                <select name="source-acount" class="custom-select" id="source-acount">
                                     <option selected>Select an account</option>
                                     <option value="1">Option1</option>
                                     <option value="2">Option2</option>
@@ -71,7 +71,7 @@
 
                                 <br><br>
                                 <span>Destination Account:</span>
-                                <select name="destination-acount" class="custom-select">
+                                <select name="destination-acount" class="custom-select" id="destination-acount">
                                     <option selected>Select an account</option>
                                     <option value="1">Option1</option>
                                     <option value="2">Option2</option>
@@ -80,7 +80,7 @@
 
                                 <br><br>
                                 <span>Daily Savings:</span>
-                                <input name="daily-savings" type="number" id="example-number-input">
+                                <input name="daily-savings" type="number" id="daily-savings">
 
                                 <br><br>
                                 <input class="start-saving-btn" type="submit" value="Create Plan">
