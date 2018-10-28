@@ -52,8 +52,6 @@ function getClientCredentials($url,$client_id,$client_secret){
     function setSubId($client_id,$client_secret,$oauth_Code,$conn){
         $curl = curl_init();
 
-       
-            
     curl_setopt_array($curl, array(
       CURLOPT_URL => "https://sandbox-apis.bankofcyprus.com/df-boc-org-sb/sb/psd2/v1/subscriptions?client_id=".$client_id."&client_secret=" .$client_secret."",
       CURLOPT_RETURNTRANSFER => true,
@@ -91,9 +89,7 @@ function getClientCredentials($url,$client_id,$client_secret){
         $sql="UPDATE information SET subscription_id ='$test' WHERE user_id = ". $_SESSION['id']."";
         
         if (mysqli_query($conn, $sql)) {
-echo "<script>
-alert('There are no fields to generate a report');</script>";
-    
+            //ola ok
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
         }
