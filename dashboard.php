@@ -1,9 +1,23 @@
 <?php
     session_start();
+
+    include('dblogin.php');
    
     if(!isset($_SESSION['id'])){ 
         header ('Location: index.php');
     }
+
+    $sql="SELECT * FROM saving_plans";
+        
+        $result = mysqli_query($conn, $sql) or die (mysqli_error($conn));
+        
+        while($row = mysqli_fetch_array($result)){
+            $_SESSION['price_goal'] = $row['price_goal'];
+            $_SESSION['goal_name'] = $row['goal_name'];
+            $_SESSION['end_date'] = $row['end_date'];
+            $_SESSION['daily_saving'] = $row['daily_saving'];
+            break;
+        }
 ?>
 
 <!DOCTYPE html>
@@ -49,11 +63,11 @@
                     <div class="row">
                         <div class="has-plan-container col-md-12">
                             <div class="info-box">
-                                <span id="current-savings">$30</span>
+                                <span><?php echo $_SESSION['goal_name']; ?></span>
+                                <span id="current-savings">$<?php echo $_SESSION['daily_saving']; ?></span>
                                 <span class="small">out of</span>
-                                <span id="goal-savings">$100</span>
+                                <span id="goal-savings">$<?php echo $_SESSION['price_goal']; ?></span>
                             </div>
-                            <a href="sign_out.php">Sign Out</a>
                         </div>
                     </div>
                 </div>
