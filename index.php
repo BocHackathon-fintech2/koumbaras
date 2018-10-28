@@ -34,7 +34,7 @@ if(isset($_GET['code'])) {
     <div id="top-nav">
         <div id="logo-container">
             <img id="logo" src="images/logo.png" alt="">
-            <span id="logo-text">Kumparas</span>
+            <span id="logo-text">Koumbaras</span>
         </div>
         <div class="mobile-menu-container">
             <span class="mobile-menu-icon"></span>

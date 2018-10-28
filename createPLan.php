@@ -26,16 +26,14 @@
     <div id="top-nav">
         <div id="logo-container">
             <img id="logo" src="images/logo.png" alt="">
-            <span id="logo-text">Kumparas</span>
+            <span id="logo-text">Koumbaras</span>
         </div>
         <div class="mobile-menu-container">
             <span class="mobile-menu-icon"></span>
         </div>
         <ul>
-            <li><a href="#">Link 1</a></li>
-            <li><a href="#">Link 2</a></li>
-            <li><a href="#">Link 3</a></li>
-            <li><a href="#">Link 4</a></li>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="dashboard.php">Dashboard</a></li>
         </ul>
     </div>
 
@@ -62,7 +60,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">€</span>
                                     </div>
-                                    <input type="text" class="form-control" id="saving-goal" name="saving-goal" required> 
+                                    <input type="text" class="form-control" id="saving-goal" name="saving-goal" required>
                                 </div>
 
                                 <br><br>
@@ -89,10 +87,10 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">€</span>
                                     </div>
-                                    <input type="text" class="form-control" id="daily-savings" name="daily-savings" min="1" required> 
+                                    <input type="text" class="form-control" id="daily-savings" name="daily-savings" min="1" required>
                                 </div>
-                                    
-                                
+
+
                                 <br><br>
                                 <input name="submit" id="create-plan" class="start-saving-btn" type="submit" value="Create Plan">
                                 <br><br>
@@ -110,29 +108,29 @@
 
 
     <script>
-      $(document).ready(function() {
-            
+        $(document).ready(function() {
+
             var daysDifference = 1;
 
-            function dateDifference(date1,date2){
+            function dateDifference(date1, date2) {
                 var res = Math.abs(date1 - date2) / 1000;
                 var days = Math.floor(res / 86400);
                 return days;
             }
 
-            $('#end-date').on('change',function(){
+            $('#end-date').on('change', function() {
                 var date = this.value;
                 var items = date.split('-');
                 var today = new Date();
-                var date2 = new Date(items[0],items[1],items[2]);
-                var date1 = new Date(today.getFullYear(),today.getMonth()+1,today.getDate());
-               daysDifference = dateDifference(date1,date2);
-               console.log(daysDifference);
-               $('#daily-savings').val((parseInt($('#saving-goal').val()) / daysDifference).toFixed(2));
+                var date2 = new Date(items[0], items[1], items[2]);
+                var date1 = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+                daysDifference = dateDifference(date1, date2);
+                console.log(daysDifference);
+                $('#daily-savings').val((parseInt($('#saving-goal').val()) / daysDifference).toFixed(2));
             });
-            
 
-            $('#end-date').on('change',function(){
+
+            $('#end-date').on('change', function() {
                 console.log(this.value);
             });
 
@@ -147,42 +145,43 @@
             console.log(authCode);
             console.log(subId);
 
-            $.get( "http://koumbaras.knowledgedesire.com/api/getAccounts.php?authCode=" + authCode + "&subId=" + subId, function(data) {
-                data.forEach(function(account) {
-                    if(account.accountId == 351012345673){
-                        account.accountName = 'KOUMBARAS';
-                    }
-                    $('#source-acount').append('<option value="'+account.accountId+'">'+account.accountName+'</option>');
-                    $('#destination-acount').append('<option value="'+account.accountId+'">'+account.accountName+'</option>');
+            $.get("http://koumbaras.knowledgedesire.com/api/getAccounts.php?authCode=" + authCode + "&subId=" + subId, function(data) {
+                    data.forEach(function(account) {
+                        if (account.accountId == 351012345673) {
+                            account.accountName = 'KOUMBARAS';
+                        }
+                        $('#source-acount').append('<option value="' + account.accountId + '">' + account.accountName + '</option>');
+                        $('#destination-acount').append('<option value="' + account.accountId + '">' + account.accountName + '</option>');
+                    });
+                })
+                .done(function() {
+                    console.log('Authentication Done');
+                })
+                .fail(function(error) {
+                    console.log('Authentication Error');
                 });
-            })
-            .done(function() {
-                console.log('Authentication Done');
-            })
-            .fail(function(error) {
-                console.log('Authentication Error');
-            });
 
             $('#source-acount').on('change', function() {
-                    if(this.value == $('#destination-acount').val()){
-                        $('#create-plan').addClass('disabled-btn');
-                    }else{
-                        $('#create-plan').removeClass('disabled-btn');
-                    }
-                });
+                if (this.value == $('#destination-acount').val()) {
+                    $('#create-plan').addClass('disabled-btn');
+                } else {
+                    $('#create-plan').removeClass('disabled-btn');
+                }
+            });
 
-                $('#destination-acount').on('change', function() {
-                    if(this.value == $('#source-acount').val()){
-                        $('#create-plan').addClass('disabled-btn');
-                    }else{
-                        $('#create-plan').removeClass('disabled-btn');
-                    }
-                });
+            $('#destination-acount').on('change', function() {
+                if (this.value == $('#source-acount').val()) {
+                    $('#create-plan').addClass('disabled-btn');
+                } else {
+                    $('#create-plan').removeClass('disabled-btn');
+                }
+            });
 
-                $('#saving-goal').on('change',function(){
-                    $('#daily-savings').val((parseInt(this.value) / daysDifference).toFixed(2));
-                });
+            $('#saving-goal').on('change', function() {
+                $('#daily-savings').val((parseInt(this.value) / daysDifference).toFixed(2));
+            });
         });
+
     </script>
 
 </body>
