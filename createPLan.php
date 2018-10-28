@@ -99,9 +99,25 @@
 
 
     <script>
-        $(document).ready(function() {
+      $(document).ready(function() {
+            
+            function dateDifference(date1,date2){
+                var res = Math.abs(date1 - date2) / 1000;
+                var days = Math.floor(res / 86400);
+                return days;
+            }
 
-            $('#end-date').on('change', function() {
+            $('#end-date').on('change',function(){
+                var date = this.value;
+                var items = date.split('-');
+                var today = new Date();
+                var date2 = new Date(items[0],items[1],items[2]);
+                var date1 = new Date(today.getFullYear(),today.getMonth()+1,today.getDate());
+                console.log(dateDifference(date1,date2));
+            });
+            
+
+            $('#end-date').on('change',function(){
                 console.log(this.value);
             });
 
@@ -114,36 +130,35 @@
             var subId = <?php echo json_encode($_SESSION['subscription_id']) ?>;
             var authCode = <?php echo json_encode($_SESSION['authCode']) ?>;
 
-            $.get('http://koumbaras.knowledgedesire.com/api/getAccounts.php?authCode=' + authCode + "&subId=" + subId, function(data) {
-
+            $.get('http://koumbaras.knowledgedesire.com/api/getAccounts.php?authCode=' + authCode + "&subId=" + subId,function (data){
+                
                 data.forEach(function(account) {
-                    if (account.accountId == 351012345673) {
+                    if(account.accountId == 351012345673){
                         account.accountName = 'KOUMBARAS';
                     }
-                    $('#source-acount').append('<option value="' + account.accountId + '">' + account.accountName + '</option>');
-                    $('#destination-acount').append('<option value="' + account.accountId + '">' + account.accountName + '</option>');
+                    $('#source-acount').append('<option value="'+account.accountId+'">'+account.accountName+'</option>');
+                    $('#destination-acount').append('<option value="'+account.accountId+'">'+account.accountName+'</option>');
                 });
 
                 $('#source-acount').on('change', function() {
-                    if (this.value == $('#destination-acount').val()) {
+                    if(this.value == $('#destination-acount').val()){
                         $('#create-plan').addClass('disabled-btn');
-                    } else {
+                    }else{
                         $('#create-plan').removeClass('disabled-btn');
                     }
                 });
 
                 $('#destination-acount').on('change', function() {
-                    if (this.value == $('#source-acount').val()) {
+                    if(this.value == $('#source-acount').val()){
                         $('#create-plan').addClass('disabled-btn');
-                    } else {
+                    }else{
                         $('#create-plan').removeClass('disabled-btn');
                     }
                 });
 
-
+                
             });
         });
-
     </script>
 
 </body>
