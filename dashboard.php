@@ -52,6 +52,7 @@
         <ul>
             <li><a href="index.php">Home</a></li>
             <li><a class="active" href="dashboard.php">Dashboard</a></li>
+            <li><a href="sign_out.php">Logout</a></li>
         </ul>
     </div>
 
