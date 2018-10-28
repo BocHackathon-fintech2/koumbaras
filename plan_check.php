@@ -1,16 +1,36 @@
 <?php
-    include("functions.php"); 
     include("dblogin.php"); 
 
-    $url = "https://sandbox-apis.bankofcyprus.com/df-boc-org-sb/sb/psd2/oauth2/token";
-    $client_id = "d4cdc1e7-1dfc-4467-948e-58e30d3fa811";
-    $client_secret = "fC2yX7rD4hD1vY3wR7aY2lF6uG1aC0dT8pI3kD7oC4jW4bL8iU";
+       
 
-
-    if(isset($_POST['submit-btn'])){ 
+    if(isset($_POST['submit'])){ 
         
-        $username = mysqli_real_escape_string($conn, $_POST['username']);
-        $password = mysqli_real_escape_string($conn, $_POST['password']);
+        $chooseGoal=mysqli_real_escape_string($conn, $_POST['choose-goal']);
+        $savingGoal= mysqli_real_escape_string($conn, $_POST['saving-goal']);
+        $endDatee= mysqli_real_escape_string($conn, $_POST['end-date']);
+        $sourceAcount= mysqli_real_escape_string($conn, $_POST['source-acount']);
+        $destinationAcount= mysqli_real_escape_string($conn, $_POST['destination-acount']);
+        $dailySavings= mysqli_real_escape_string($conn, $_POST['daily-savings']); 
+        
+        
+        echo $chooseGoal."<br />";
+        
+        echo $savingGoal."<br />";
+        echo $endDatee."<br />";
+        echo $sourceAcount."<br />";
+        echo $destinationAcount."<br />";
+        echo $dailySavings."<br />";
+    }
+
+   
+
+        /*
+        echo $choose-goal;
+        echo $saving-goal;
+        echo $end-datee;
+        echo $source-acount;
+        echo $destination-acount;
+        echo $daily-savings;
         
         $sql="SELECT * FROM information";
         
@@ -31,11 +51,8 @@
                     
                     
                 $acc_tok = getClientCredentials($url,$client_id,$client_secret);
-
                     if($row['is_sub_id_active'] == '0'){
                             setSubId($client_id,$client_secret,$acc_tok,$conn);
-                        
-                        
                     }
                     
                     header ('Location: after-login.php');
@@ -43,8 +60,6 @@
                     
                 }
                 else{
-                    $acc_tok = getClientCredentials($url,$client_id,$client_secret);
-                    $_SESSION['authCode'] = $acc_tok;
                     //O user exi sub id
                     header ('Location: after.php');
  
@@ -62,5 +77,11 @@
 else{
 echo'Unable to log in.';
 }
-           
+
+          
+    }
+else{
+    echo'no access';
+}
+*/
 ?>

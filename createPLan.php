@@ -18,7 +18,11 @@
 </head>
 
 <body>
+    <?php
+     session_start(); 
 
+    
+    ?>
     <div id="top-nav">
         <div id="logo-container">
             <img id="logo" src="images/logo.png" alt="">
@@ -43,7 +47,7 @@
                     <div class="row">
                         <div class="create-plan-container col-md-12">
 
-                            <form class="create-plan-form" action="" method="post">
+                            <form class="create-plan-form" action="plan_check.php" method="post">
 
                                 <span>Choose Goal:</span>
                                 <select name="choose-goal" class="custom-select">
@@ -64,18 +68,14 @@
                                 <span>Source Account:</span>
                                 <select name="source-acount" class="custom-select" id="source-acount">
                                     <option selected>Select an account</option>
-                                    <option value="1">Option1</option>
-                                    <option value="2">Option2</option>
-                                    <option value="3">Option3</option>
+
                                 </select>
 
                                 <br><br>
                                 <span>Destination Account:</span>
                                 <select name="destination-acount" class="custom-select" id="destination-acount">
                                     <option selected>Select an account</option>
-                                    <option value="1">Option1</option>
-                                    <option value="2">Option2</option>
-                                    <option value="3">Option3</option>
+
                                 </select>
 
                                 <br><br>
@@ -83,7 +83,7 @@
                                 <input name="daily-savings" type="number" id="daily-savings">
 
                                 <br><br>
-                                <input class="start-saving-btn" type="submit" value="Create Plan">
+                                <input name="submit" id="create-plan" class="start-saving-btn" type="submit" value="Create Plan">
                                 <br><br>
 
                             </form>
@@ -101,13 +101,47 @@
     <script>
         $(document).ready(function() {
 
+            $('#end-date').on('change', function() {
+                console.log(this.value);
+            });
+
             $('.mobile-menu-container').on('click', function() {
                 $(this).children('.mobile-menu-icon').toggleClass('open');
                 $('#top-nav ul').slideToggle("fast");
 
             });
 
+            var subId = <?php echo json_encode($_SESSION['subscription_id']) ?>;
+            var authCode = <?php echo json_encode($_SESSION['authCode']) ?>;
 
+            $.get('http://koumbaras.knowledgedesire.com/api/getAccounts.php?authCode=' + authCode + "&subId=" + subId, function(data) {
+
+                data.forEach(function(account) {
+                    if (account.accountId == 351012345673) {
+                        account.accountName = 'KOUMBARAS';
+                    }
+                    $('#source-acount').append('<option value="' + account.accountId + '">' + account.accountName + '</option>');
+                    $('#destination-acount').append('<option value="' + account.accountId + '">' + account.accountName + '</option>');
+                });
+
+                $('#source-acount').on('change', function() {
+                    if (this.value == $('#destination-acount').val()) {
+                        $('#create-plan').addClass('disabled-btn');
+                    } else {
+                        $('#create-plan').removeClass('disabled-btn');
+                    }
+                });
+
+                $('#destination-acount').on('change', function() {
+                    if (this.value == $('#source-acount').val()) {
+                        $('#create-plan').addClass('disabled-btn');
+                    } else {
+                        $('#create-plan').removeClass('disabled-btn');
+                    }
+                });
+
+
+            });
         });
 
     </script>

@@ -1,42 +1,10 @@
 <?php
-   
     session_start();
    
     if(!isset($_SESSION['id'])){ 
         header ('Location: index.php');
     }
-    include("dblogin.php"); 
-
-    if(isset($_GET['code'])) {
-    $code = $_GET['code'];
-        
-    $sql="UPDATE information SET authorization_code ='$code' WHERE user_id = ". $_SESSION['id']."";
-        
-    if (mysqli_query($conn, $sql)) {
-       
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-        }
-
-        mysqli_close($conn);
-    }
-
-    $sql="SELECT * FROM saving_plans WHERE user_id = ". $_SESSION['id']."";
-        
-    $result = mysqli_query($conn, $sql) or die (mysqli_error($conn));
-        
-    $num_rows = mysqli_num_rows($result);
-
-    if ($num_rows>0){
-     header ('Location: index.php');
-    }
-    mysqli_close($conn);
-
-
-
-
 ?>
-
 
 <!DOCTYPE html>
 
@@ -68,7 +36,7 @@
             <span class="mobile-menu-icon"></span>
         </div>
         <ul>
-            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Link 1</a></li>
             <li><a href="#">Link 2</a></li>
             <li><a href="#">Link 3</a></li>
             <li><a href="#">Link 4</a></li>
@@ -81,8 +49,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="start-savings-container col-md-12">
-                            <a class="start-saving-btn" href="createPLan.php"><span>+</span>Start Saving</a>
+                        <div class="has-plan-container col-md-12">
+                            <div class="info-box">
+                                <span id="current-savings">$30</span>
+                                <span class="small">out of</span>
+                                <span id="goal-savings">$100</span>
+                            </div>
+                            <a href="sign_out.php">Sign Out</a>
                         </div>
                     </div>
                 </div>

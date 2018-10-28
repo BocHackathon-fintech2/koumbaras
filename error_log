@@ -1,3 +1,0 @@
-[27-Oct-2018 22:13:48 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home4/knowlez7/public_html/koumbaras/dblogin.php on line 8
-[27-Oct-2018 22:13:49 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home4/knowlez7/public_html/koumbaras/dblogin.php on line 8
-[27-Oct-2018 23:07:22 UTC] PHP Parse error:  syntax error, unexpected '<' in /home4/knowlez7/public_html/koumbaras/index.php on line 58

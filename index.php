@@ -40,10 +40,22 @@ if(isset($_GET['code'])) {
             <span class="mobile-menu-icon"></span>
         </div>
         <ul>
-            <li><a href="#">Link 1</a></li>
-            <li><a href="#">Link 2</a></li>
-            <li><a href="#">Link 3</a></li>
-            <li><a href="#">Link 4</a></li>
+            <?php
+            if(!isset($_SESSION['id'])){ 
+            ?>
+            <li><a class="active" href="index.php">Home</a></li>
+            <?php
+            }
+            else{
+            ?>
+            <li><a class="active" href="index.php">Home</a></li>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <?php
+                        
+            }
+                    
+            ?>
+
         </ul>
     </div>
 
@@ -76,7 +88,7 @@ if(isset($_GET['code'])) {
                     }
                     else{
                         ?>
-                    <span id="log-in-txt">You are logged in!</span>
+                    <span id="log-in-txt logged">You are logged in!</span>
                     <?php
                         
                     }

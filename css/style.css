@@ -141,6 +141,15 @@ body {
     color: #4a4a4a;
 }
 
+#top-nav .active {
+    color: #06afaf;
+}
+
+.disabled-btn {
+    cursor: not-allowed;
+    background: #c6c6c6 !important;
+}
+
 #top-nav ul li:first-child {
     border-top: 1px solid rgba(0, 0, 0, .1);
 
