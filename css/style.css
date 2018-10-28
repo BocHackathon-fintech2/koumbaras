@@ -330,6 +330,20 @@ input.btn[type="submit"]:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
 
+.container-fluid.img{
+    background-image: url(../images/plan_background.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+.info-box *{
+    color: rgb(11, 0, 114);
+font-weight: bold;
+padding: 5px;
+}
+
 .start-saving-btn span {
     position: absolute;
     left: 10px;
@@ -352,7 +366,7 @@ input.btn[type="submit"]:hover {
 .has-plan-container .info-box {
     height: 180px;
     width: 180px;
-    border: 1px solid #00528e;
+    border: 3px solid #00528e;
     border-radius: 50%;
     display: -webkit-box;
     display: -ms-flexbox;

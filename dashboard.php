@@ -57,7 +57,7 @@
     </div>
 
 
-    <div class="container-fluid content no-bg">
+    <div class="container-fluid content no-bg img">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
