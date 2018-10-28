@@ -1,6 +1,7 @@
 <?php
     include("functions.php"); 
     include("dblogin.php"); 
+    include("api/functions/createSubscription.php");
 
     $url = "https://sandbox-apis.bankofcyprus.com/df-boc-org-sb/sb/psd2/oauth2/token";
     $client_id = "d4cdc1e7-1dfc-4467-948e-58e30d3fa811";
@@ -22,29 +23,32 @@
             
                 $_SESSION['id'] = $row['user_id'];
                 $_SESSION['name'] = $row['user_name'];
-                $_SESSION['subscription_id'] = $row['subscription_id'];
+                $_SESSION['subId'] = $row['subscription_id'];
                 $_SESSION['client_id'] = "d4cdc1e7-1dfc-4467-948e-58e30d3fa811";
                 $_SESSION['client_secret'] = "fC2yX7rD4hD1vY3wR7aY2lF6uG1aC0dT8pI3kD7oC4jW4bL8iU";
          
                     //An den exei sub id o user pare ton na kami auth stin 1bank
-                if($row['subscription_id']=='null' || $row['authorization_code']=='null'){
+                if($row['subscription_id']=='null'){
                     
                     
-                $acc_tok = getClientCredentials($url,$client_id,$client_secret);
+                    //save initial tocken
+                    $authCodeResult = getAuthCode($client_id, $client_secret);
+                    $_SESSION['initialToken'] = $authCodeResult['access_token'];
 
-                    if($row['is_sub_id_active'] == '0'){
-                            setSubId($client_id,$client_secret,$acc_tok,$conn);
-                        
-                        
-                    }
+                    //Get subId
+                    $createSubscriptionResult = createSubscription($_SESSION['initialToken'],$client_id, $client_secret);
+                    $_SESSION['subId'] = $createSubscriptionResult['subscriptionId'];
                     
+                   
                     header ('Location: after-login.php');
                     
                     
                 }
                 else{
-                    $acc_tok = getClientCredentials($url,$client_id,$client_secret);
-                    $_SESSION['authCode'] = $acc_tok;
+                     //save initial tocken
+                     $authCodeResult = getAuthCode($client_id, $client_secret);
+                     $_SESSION['initialToken'] = $authCodeResult['access_token'];
+
                     //O user exi sub id
                     header ('Location: after.php');
  

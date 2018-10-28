@@ -393,3 +393,13 @@ input.btn[type="submit"]:hover {
 .create-plan-container .create-plan-form span {
     color: #555555;
 }
+
+.input-group-text{
+    position: absolute;
+    bottom: 0;
+    z-index: 9;
+}
+
+#daily-savings, #saving-goal{
+    padding-left: 40px;
+}

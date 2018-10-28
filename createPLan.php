@@ -58,30 +58,41 @@
                                 </select>
                                 <br><br>
                                 <span>Saving Goal:</span>
-                                <input name="saving-goal" type="number" id="saving-goal">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">€</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="saving-goal" name="saving-goal" required> 
+                                </div>
 
                                 <br><br>
                                 <span>By Date:</span>
-                                <input name="end-date" type="date" id="end-date">
+                                <input name="end-date" type="date" id="end-date" required>
 
                                 <br><br>
                                 <span>Source Account:</span>
-                                <select name="source-acount" class="custom-select" id="source-acount">
-                                    <option selected>Select an account</option>
+                                <select name="source-acount" class="custom-select" id="source-acount" required>
+                                    <option selected value="">Select an account</option>
 
                                 </select>
 
                                 <br><br>
                                 <span>Destination Account:</span>
-                                <select name="destination-acount" class="custom-select" id="destination-acount">
-                                    <option selected>Select an account</option>
+                                <select name="destination-acount" class="custom-select" id="destination-acount" required>
+                                    <option selected value="">Select an account</option>
 
                                 </select>
 
                                 <br><br>
                                 <span>Daily Savings:</span>
-                                <input name="daily-savings" type="number" id="daily-savings">
-
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">€</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="daily-savings" name="daily-savings" min="1" required> 
+                                </div>
+                                    
+                                
                                 <br><br>
                                 <input name="submit" id="create-plan" class="start-saving-btn" type="submit" value="Create Plan">
                                 <br><br>
@@ -101,6 +112,8 @@
     <script>
       $(document).ready(function() {
             
+            var daysDifference = 1;
+
             function dateDifference(date1,date2){
                 var res = Math.abs(date1 - date2) / 1000;
                 var days = Math.floor(res / 86400);
@@ -113,7 +126,9 @@
                 var today = new Date();
                 var date2 = new Date(items[0],items[1],items[2]);
                 var date1 = new Date(today.getFullYear(),today.getMonth()+1,today.getDate());
-                console.log(dateDifference(date1,date2));
+               daysDifference = dateDifference(date1,date2);
+               console.log(daysDifference);
+               $('#daily-savings').val((parseInt($('#saving-goal').val()) / daysDifference).toFixed(2));
             });
             
 
@@ -127,11 +142,12 @@
 
             });
 
-            var subId = <?php echo json_encode($_SESSION['subscription_id']) ?>;
-            var authCode = <?php echo json_encode($_SESSION['authCode']) ?>;
+            var subId = <?php echo json_encode($_SESSION['subId']) ?>;
+            var authCode = <?php echo json_encode($_SESSION['initialToken']) ?>;
+            console.log(authCode);
+            console.log(subId);
 
-            $.get('http://koumbaras.knowledgedesire.com/api/getAccounts.php?authCode=' + authCode + "&subId=" + subId,function (data){
-                
+            $.get( "http://koumbaras.knowledgedesire.com/api/getAccounts.php?authCode=" + authCode + "&subId=" + subId, function(data) {
                 data.forEach(function(account) {
                     if(account.accountId == 351012345673){
                         account.accountName = 'KOUMBARAS';
@@ -139,8 +155,15 @@
                     $('#source-acount').append('<option value="'+account.accountId+'">'+account.accountName+'</option>');
                     $('#destination-acount').append('<option value="'+account.accountId+'">'+account.accountName+'</option>');
                 });
+            })
+            .done(function() {
+                console.log('Authentication Done');
+            })
+            .fail(function(error) {
+                console.log('Authentication Error');
+            });
 
-                $('#source-acount').on('change', function() {
+            $('#source-acount').on('change', function() {
                     if(this.value == $('#destination-acount').val()){
                         $('#create-plan').addClass('disabled-btn');
                     }else{
@@ -156,8 +179,9 @@
                     }
                 });
 
-                
-            });
+                $('#saving-goal').on('change',function(){
+                    $('#daily-savings').val((parseInt(this.value) / daysDifference).toFixed(2));
+                });
         });
     </script>
 

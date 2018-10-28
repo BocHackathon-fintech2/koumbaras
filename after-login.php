@@ -71,7 +71,7 @@
 
             var client_secret = <?php echo json_encode($_SESSION['client_secret']) ?>;
             var client_id = <?php echo json_encode($_SESSION['client_id']) ?>;
-            var subscription_id = <?php echo json_encode($_SESSION['subscription_id']) ?>;
+            var subId = <?php echo json_encode($_SESSION['subId']) ?>;
             $('.mobile-menu-container').on('click', function() {
                 $(this).children('.mobile-menu-icon').toggleClass('open');
                 $('#top-nav ul').slideToggle("fast");
@@ -80,7 +80,7 @@
 
             $('.i-bank-btn').on('click', function() {
 
-                window.location.href = 'https://sandbox-apis.bankofcyprus.com/df-boc-org-sb/sb/psd2/oauth2/authorize?response_type=code&redirect_uri=http://koumbaras.knowledgedesire.com&scope=UserOAuth2Security&client_id=' + client_id + '&subscriptionid=' + subscription_id + '';
+                window.location.href = 'https://sandbox-apis.bankofcyprus.com/df-boc-org-sb/sb/psd2/oauth2/authorize?response_type=code&redirect_uri=http://koumbaras.knowledgedesire.com&scope=UserOAuth2Security&client_id=' + client_id + '&subscriptionid=' + subId + '';
             });
 
         });

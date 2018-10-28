@@ -87,6 +87,7 @@ function getClientCredentials($url,$client_id,$client_secret){
     $test =$response['subscriptionId'];
                 
         $sql="UPDATE information SET subscription_id ='$test' WHERE user_id = ". $_SESSION['id']."";
+        $_SESSION['subId'] = $test;
         
         if (mysqli_query($conn, $sql)) {
             //ola ok

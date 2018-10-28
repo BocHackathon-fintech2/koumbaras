@@ -1,6 +1,10 @@
 <?php
-   
-    session_start();
+   include 'functions.php';
+   include 'dblogin.php';
+   include("api/functions/createSubscription.php");
+   $url = "https://sandbox-apis.bankofcyprus.com/df-boc-org-sb/sb/psd2/oauth2/token";
+    $client_id = "d4cdc1e7-1dfc-4467-948e-58e30d3fa811";
+    $client_secret = "fC2yX7rD4hD1vY3wR7aY2lF6uG1aC0dT8pI3kD7oC4jW4bL8iU";
    
     if(!isset($_SESSION['id'])){ 
         header ('Location: index.php');
@@ -9,19 +13,39 @@
 
     if(isset($_GET['code'])) {
     $code = $_GET['code'];
-        
-    $sql="UPDATE information SET authorization_code ='$code' WHERE user_id = ". $_SESSION['id']."";
-        
-    if (mysqli_query($conn, $sql)) {
-       
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-        }
+    $authenticateUrlResult = authenticateUrlCode($_SESSION['client_id'],$_SESSION['client_secret'],$code);
 
-        mysqli_close($conn);
+    $secondAccessToken = $authenticateUrlResult['access_token'];
+    $_SESSION['secondToken']  = $secondAccessToken;
+    
     }
 
-    $sql="SELECT * FROM saving_plans WHERE user_id = ". $_SESSION['id']."";
+    if(isset($_SESSION['secondToken'])){
+
+        $retrievedSubscription = retrieveSubscription($_SESSION['subId'],$_SESSION['client_id'],$_SESSION['client_secret'],$_SESSION['initialToken']);
+        
+        $selectedAccounts = $retrievedSubscription[0]['selectedAccounts'];
+        $payments = $retrievedSubscription[0]['payments'];
+        $accounts = $retrievedSubscription[0]['accounts'];
+        
+        $postBody = json_encode(array("selectedAccounts"=>$selectedAccounts,"payments"=>$payments,"accounts"=>$accounts));
+        
+        $patchResult =  patchSubscription($_SESSION['subId'],$_SESSION['client_id'],$_SESSION['client_secret'],$_SESSION['secondToken'],$postBody);
+    
+        if(isset($patchResult['status']) && $patchResult['status']  == 'ACTV'){
+            $sql="UPDATE information SET subscription_id ='$_SESSION[subId]' WHERE user_id = ". $_SESSION['id']."";
+                    
+            if (mysqli_query($conn, $sql)) {
+                //ola ok
+            } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            }
+    
+            mysqli_close($conn);
+        }
+    }
+
+    /*$sql="SELECT * FROM saving_plans WHERE user_id = ". $_SESSION['id']."";
         
     $result = mysqli_query($conn, $sql) or die (mysqli_error($conn));
         
@@ -30,7 +54,7 @@
     if ($num_rows>0){
      header ('Location: index.php');
     }
-    mysqli_close($conn);
+    mysqli_close($conn);*/
 
 
 
